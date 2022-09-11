@@ -2,6 +2,7 @@ from django.db import models
 from conf import settings
 # Create your models here.
 
+<<<<<<< HEAD
 class Student(models.Model):
     DOCUMENTS = (
         "passport",        
@@ -18,10 +19,42 @@ class Student(models.Model):
     address = models.CharField(max_length=255)
     agree_with_agreement = models.BooleanField()
     university = models.CharField(max_length=255)
+=======
+
+class University(models.Model):
+    name = models.CharField(max_length=30)
+    university_cart = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'University'
+        verbose_name_plural = 'Universities'
+
+
+class Student(models.Model):
+    # DOCUMENTS = (
+    #     "passport",
+    #     "photo",
+    #     "university_cert",
+    # )
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    # passport_number = models.CharField(
+    #     max_length=255, unique=True
+    # )
+    #
+    # address = models.CharField(max_length=255)
+    # agree_with_agreement = models.BooleanField()
+    university = models.ForeignKey(University, on_delete=models.RESTRICT)
+>>>>>>> b4f84d110abac91e3e728c058c03343c18dccad5
 
     passport = models.FileField(
         upload_to="uploads/%Y/%m/%d"
     )
+<<<<<<< HEAD
     university_cert = models.FileField(
         null=True, blank=True, upload_to="uploads/%Y/%m/%d"
     )
@@ -29,6 +62,15 @@ class Student(models.Model):
         null=True, blank=True, upload_to="uploads/%Y/%m/%d"
     )
 
+=======
+    # university_cert = models.FileField(
+    #     null=True, blank=True, upload_to="uploads/%Y/%m/%d"
+    # )
+    # photo = models.FileField(
+    #     null=True, blank=True, upload_to="uploads/%Y/%m/%d"
+    # )
+    #
+>>>>>>> b4f84d110abac91e3e728c058c03343c18dccad5
     price = models.DecimalField(max_digits=8,decimal_places=2,default=0)
 
 

@@ -2,7 +2,11 @@ from contextlib import nullcontext
 from email.policy import default
 from statistics import mode
 from django.db import models
+<<<<<<< HEAD
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+=======
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+>>>>>>> b4f84d110abac91e3e728c058c03343c18dccad5
 from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 

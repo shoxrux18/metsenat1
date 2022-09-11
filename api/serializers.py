@@ -12,6 +12,5 @@ class StudentRegisterSerializer(serializers.ModelSerializer):
 class StudentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ('first_name', 'last_name', 'university', 'price')
-
+        fields = ('first_name', 'last_name', 'university', 'price', 'passport')
 

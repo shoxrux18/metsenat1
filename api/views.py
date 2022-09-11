@@ -33,7 +33,7 @@ class StudentListViews(generics.ListAPIView):
     # filterset_class = FilterStudent
 
     def get_queryset(self):
-        user = self.request.user
+        user = self.request.user.is_authenticated
         if user:
             univer = self.kwargs['pk']
             student = Student.objects.filter(university_id=univer).all()
@@ -53,3 +53,5 @@ class StudentListViews(generics.ListAPIView):
         # print(obj)
         # self.check_object_permissions(self.request, obj)
         # return obj
+
+

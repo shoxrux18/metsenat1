@@ -32,9 +32,9 @@ class Student(models.Model):
     # agree_with_agreement = models.BooleanField()
     university = models.ForeignKey(University, on_delete=models.RESTRICT)
 
-    # passport = models.FileField(
-    #     upload_to="uploads/%Y/%m/%d"
-    # )
+    passport = models.FileField(
+        upload_to="uploads/%Y/%m/%d"
+    )
     # university_cert = models.FileField(
     #     null=True, blank=True, upload_to="uploads/%Y/%m/%d"
     # )

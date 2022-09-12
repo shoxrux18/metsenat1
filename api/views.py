@@ -4,10 +4,11 @@ from rest_framework import generics
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from .filter import FilterStudent
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 
 
 class StudentRegisterView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
     queryset = Student.objects.all()
     serializer_class = StudentRegisterSerializer
     parser_classes = (MultiPartParser, FormParser, JSONParser)
@@ -16,7 +17,7 @@ class StudentRegisterView(generics.CreateAPIView):
 
         serializer.save(user=self.request.user)
 
-        serializer.save(user=self.request.user)
+        
 
 
 class StudentListView(generics.ListAPIView):

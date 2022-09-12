@@ -6,21 +6,11 @@ from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import exceptions, serializers, status
 
 class RegisterSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
-    username = serializers.CharField(max_length=100,write_only=True)
-    password = serializers.CharField(write_only=True)
-    confirm = serializers.CharField(write_only=True)
-    phone_number = PhoneNumberField(write_only=True)
-    role = serializers.ChoiceField(choices=User.Roles.choices,write_only=True)
-
-
-=======
     username = serializers.CharField(max_length=100, write_only=True)
     password = serializers.CharField(write_only=True)
     confirm = serializers.CharField(write_only=True)
     phone_number = PhoneNumberField(write_only=True)
     role = serializers.ChoiceField(choices=User.Roles.choices, write_only=True)
->>>>>>> b4f84d110abac91e3e728c058c03343c18dccad5
 
     def create(self, validated_data):
 
@@ -31,21 +21,11 @@ class RegisterSerializer(serializers.ModelSerializer):
                         "confirm": "Passwords not match",
                     }
                 )
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> b4f84d110abac91e3e728c058c03343c18dccad5
         user = User.objects.create(
             username=validated_data['username'],
             password=validated_data['password'],
             phone_number=validated_data['phone_number'],
             role=validated_data['role']
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> b4f84d110abac91e3e728c058c03343c18dccad5
 
         )
         if user.password is not None:

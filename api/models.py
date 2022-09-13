@@ -1,6 +1,20 @@
 from django.db import models
 from conf import settings
+from .decorators import UploadTo
 # Create your models here.
+
+class University(models.Model):
+    name = models.CharField(max_length=30)
+    university_cart = models.CharField(max_length=50)
+
+    def str(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'University'
+        verbose_name_plural = 'Universities'
+
+
 
 class Student(models.Model):
     DOCUMENTS = (
@@ -17,7 +31,7 @@ class Student(models.Model):
     
     address = models.CharField(max_length=255)
     agree_with_agreement = models.BooleanField()
-    university = models.CharField(max_length=255)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
 
     passport = models.FileField(
         upload_to="uploads/%Y/%m/%d"

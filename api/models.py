@@ -34,7 +34,7 @@ class Student(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
 
     passport = models.FileField(
-        upload_to="uploads/%Y/%m/%d"
+        upload_to=UploadTo('passport')
     )
     university_cert = models.FileField(
         null=True, blank=True, upload_to="uploads/%Y/%m/%d"
@@ -47,8 +47,7 @@ class Student(models.Model):
 
 
 
-class Sponsor(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+class Sponsor(models.Model):    
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -61,7 +60,9 @@ class Sponsor(models.Model):
     agree_with_agreement = models.BooleanField(default=False)
 
     passport = models.FileField(
-        null=True, blank=True, upload_to="uploads/%Y/%m/%d"
+        upload_to=UploadTo('passport')
+        
+        
     )
     photo = models.FileField(
         null=True, blank=True, upload_to="uploads/%Y/%m/%d"

@@ -1,8 +1,13 @@
 from rest_framework import serializers
 from .models import Student,Sponsor,University
 
+class UniversitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = University
+        fields = '__all__'
+
 class StudentRegisterSerializer(serializers.ModelSerializer):
-    passport = serializers.FileField(read_only=False)
+    passport = serializers.FileField()
     class Meta:
         model = Student
         exclude = ("user",)
@@ -18,6 +23,7 @@ class SponsorRegisterSerializer(serializers.ModelSerializer):
 
 
 class StudentListSerializer(serializers.ModelSerializer):
+    university = UniversitySerializer(read_only=True)
     class Meta:
         model = Student
         fields = ('first_name', 'last_name', 'university', 'price', 'passport')

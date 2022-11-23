@@ -1,11 +1,7 @@
-from contextlib import nullcontext
-from email.policy import default
-from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import PermissionsMixin
-# Create your models here.
 
 
 class CustomUserManager(BaseUserManager):

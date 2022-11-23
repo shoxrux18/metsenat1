@@ -1,54 +1,39 @@
+from django.shortcuts import get_object_or_404
 from .serializers import StudentRegisterSerializer, StudentListSerializer,SponsorRegisterSerializer
-from .models import Student, Sponsor
+from .models import Student, University
 from rest_framework import generics
-from rest_framework.parsers import MultiPartParser, FormParser, JSONParser,FileUploadParser
+from rest_framework import permissions
+from . import permissons as api_permissons
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from .filter import FilterStudent
-from rest_framework.permissions import IsAuthenticated,AllowAny
-
 
 class StudentRegisterView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Student.objects.all()
+    permission_classes = [permissions.IsAuthenticated,]
     serializer_class = StudentRegisterSerializer
-    parser_classes = [MultiPartParser]
 
     def perform_create(self, serializer):
-
         serializer.save(user=self.request.user)
         
 
-
-class StudentListView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Student.objects.all()
-    serializer_class = StudentListSerializer
-
-
-
-class StudentListViews(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Student.objects.all()
-    serializer_class = StudentListSerializer
-   
-
-    def get_queryset(self):
-        user = self.request.user.is_authenticated
-        if user:
-            univer = self.kwargs['pk']
-            student = Student.objects.filter(university_id=univer).all()
-            return student
-        return Response(data={
-            "user_id": "you need register"
-        })
-
-
 class SponsorRegisterView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Sponsor.objects.all()
+    permission_classes = [permissions.IsAuthenticated,]
     serializer_class = SponsorRegisterSerializer
-    parser_classes = [MultiPartParser]
 
     def perform_create(self, serializer):
-
         serializer.save(user=self.request.user)
+
+
+class StudentListView(generics.ListAPIView):
+    permission_classes = [api_permissons.IsSponsor,]
+    queryset = Student.objects.select_related('university')
+    serializer_class = StudentListSerializer
+
+
+class UniversityStudentsView(APIView):
+    permission_classes = [api_permissons.IsSponsor,]
+    
+    def get(self, request, pk):
+        university = get_object_or_404(University, pk=pk)
+        students = university.student_set.all()
+        serializer = StudentListSerializer(students, many=True)
+        return Response(serializer.data)

@@ -1,17 +1,14 @@
 from rest_framework import serializers
-from account.models import User
-from api.models import Student,Sponsor
-from django.db import models
+from api.models import Student
 
 
 
 class PaymentSerializer(serializers.Serializer):
-    user = serializers.CharField(source='student.id')
-    first_name = serializers.CharField(max_length=255)
-    university = serializers.CharField(source='student.university.id')
-    price = serializers.DecimalField(write_only=True,max_digits=8, decimal_places=2)
+    student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())
+    amount = serializers.DecimalField(max_digits=8, decimal_places=2)
 
-    
-          
-    def create(self, validated_data):
-        return Student(**validated_data)
+    def validate_amount(self, amount):
+        user = self.context['request'].user
+        if user.sponsor.price < amount:
+            raise serializers.ValidationError('Not enough money')
+        return amount

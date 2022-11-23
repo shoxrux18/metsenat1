@@ -1,9 +1,8 @@
-from random import choices
-from rest_framework.response import Response
-from rest_framework import serializers
-from .models import User
+from django.contrib.auth import get_user_model
 from phonenumber_field.serializerfields import PhoneNumberField
-from rest_framework import exceptions, serializers, status
+from rest_framework import exceptions, serializers
+
+User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=100, write_only=True)
@@ -13,7 +12,6 @@ class RegisterSerializer(serializers.ModelSerializer):
     role = serializers.ChoiceField(choices=User.Roles.choices, write_only=True)
 
     def create(self, validated_data):
-
         if validated_data["password"] != validated_data["confirm"]:
                 raise exceptions.ValidationError(
                     detail={

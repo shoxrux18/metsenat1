@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
+        'PASSWORD': env('DB_PASS'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
     }
@@ -125,9 +125,9 @@ AUTH_USER_MODEL = 'account.User'
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'assets'
+STATIC_ROOT = [BASE_DIR / 'assets','var/www/metsenat1/static/']
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'static','/var/www/metsenat1/static/',
 ]
 
 

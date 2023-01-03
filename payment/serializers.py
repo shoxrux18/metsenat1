@@ -12,3 +12,5 @@ class PaymentSerializer(serializers.Serializer):
         if user.sponsor.price < amount:
             raise serializers.ValidationError('Not enough money')
         return amount
+
+    
